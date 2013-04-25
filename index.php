@@ -1,0 +1,1 @@
+<html><p><a href="install.php">Install Script</a></p></html>
