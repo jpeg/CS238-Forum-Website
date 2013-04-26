@@ -2,7 +2,7 @@
 include 'config.php';
 include 'template.php';
 
-template_head('Forum Index', 'Jason Gassel');
+template_head('Forum Index', 'Jason Gassel, Josh Galan, Matthew McKeller');
 template_forum_header();
 
 $db = new mysqli($db_server, $db_user, $db_password) or die('<div class="failure">ERROR: Database connection failed</div>');

@@ -2,7 +2,7 @@
 include 'config.php';
 include 'template.php';
 
-template_head('Register', 'Jason Gassel');
+template_head('Register', 'Jason Gassel, Josh Galan, Matthew McKeller');
 template_forum_header();
 
 // Received form data
