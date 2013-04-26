@@ -1,4 +1,6 @@
 <?php
+include 'session.php';
+
 function template_head($title, $author)
 {
 ?>
@@ -20,7 +22,25 @@ function template_head($title, $author)
 
 function template_forum_header()
 {
+  session_init();
 ?>
+  <header>
+    <ul>
+      <li><a href="index.php" id="logo">forum238</a></li>
+<?php
+  if($_SESSION['uid'] == 0)
+  {
+    echo "      <li><a href=\"login.php\">Login</a></li>\n";
+    echo "      <li><a href=\"register.php\">Register</a></li>\n";
+  }
+  else
+  {
+    echo "      <li><a href=\"profile.php?user=".$_SESSION['uid']."\">".$_SESSION['username']."</a></li>\n";
+    echo "      <li><a href=\"?logout\">Logout</a></li>\n";
+  }
+?>
+    </ul>
+  </header>
   <section id="content">
 <?php
 }

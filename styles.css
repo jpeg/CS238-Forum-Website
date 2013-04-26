@@ -12,6 +12,33 @@ body
   width: 900px;
 }
 
+header ul
+{
+  text-align: right;
+  vertical-align: bottom;
+  margin: 0px;
+  padding: 0px;
+  line-height: 50px;
+}
+
+header ul li
+{
+  display: inline;
+  list-style-type: none;
+  margin-left: 15px;
+}
+
+header ul li a
+{
+  color: Navy;
+  text-decoration: none;
+}
+
+header ul li a:hover
+{
+  text-decoration: underline;
+}
+
 footer
 {
   color: LightGrey;
@@ -20,10 +47,21 @@ footer
   font-style: italic;
 }
 
+#logo
+{
+  float: left;
+  color: Black;
+  font-family: LilyUPC;
+  font-size: 60pt;
+  text-decoration: none;
+  margin-left: 10px;
+  line-height: 30px;
+}
+
 #content
 {
-  align: center;
   background: DarkGrey;
+  margin-top: -5px;
 	margin-bottom: 10px;
 	overflow: hidden;
 	padding: 20px;

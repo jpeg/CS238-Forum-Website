@@ -3,6 +3,12 @@ function session_init()
 {
   session_start();
   
+  if(isset($_GET['logout']))
+  {
+    session_destroy();
+    session_start();
+  }
+  
   // Check if not logged in
   if(!isset($_SESSION['uid']))
   {
