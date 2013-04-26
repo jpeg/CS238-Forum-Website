@@ -6,6 +6,7 @@ template_head('Register', 'Jason Gassel, Josh Galan, Matthew McKeller');
 template_forum_header();
 
 // Received form data
+$invalid = false;
 if(isset($_POST['username']))
 {
   $db = new mysqli($db_server, $db_user, $db_password) or die('<div class="failure">ERROR: Database connection failed</div>');
@@ -22,7 +23,7 @@ window.location = "index.php";
 <?php
     }
     else
-      echo "  <h4 class=\"failure\">Username already taken</h4>\n";
+      $invalid = true;
   }
   else
     echo "  <h4 style=\"text-align: center;\">Database not found: <a href=\"install.php\">Install</a></h4>\n";
@@ -57,6 +58,10 @@ function validateForm()
 
   <form name="registerForm" action="register.php" onsubmit="return validateForm()" method="post" class="register">
     <h2>Register account</h2>
+<?php
+if($invalid)
+  echo "    <h4 class=\"failure\">Username already taken</h4>\n";
+?>
     Username: <input type="text" name="username" required autofocus /><br />
     Password: <input type="password" name="password" required /><br />
     Confirm Password: <input type="password" name="password2" required /><br />

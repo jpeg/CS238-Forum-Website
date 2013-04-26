@@ -1,4 +1,6 @@
 <?php
+include 'config.php';
+
 function session_init()
 {
   session_start();
@@ -19,6 +21,11 @@ function session_init()
 
 function session_auth($username, $password, &$db = NULL)
 {
+  global $db_server;
+  global $db_user;
+  global $db_password;
+  global $db_database;
+  
   $db_null = ($db == NULL);
   
   if($db_null)
@@ -34,6 +41,8 @@ function session_auth($username, $password, &$db = NULL)
   if($db_null)
     $db->close();
   
+  if($_SESSION['username'] === $username)
+    return true;
   return false;
 }
 

@@ -50,6 +50,17 @@ form.register input
   margin: 2px;
 }
 
+form.login
+{
+  text-align: right;
+  width: 220px;
+}
+
+form.login input
+{
+  margin: 2px;
+}
+
 footer
 {
   color: LightGrey;
