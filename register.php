@@ -8,12 +8,13 @@ template_forum_header();
 // Received form data
 if(isset($_POST['username']))
 {
-  $db = mysql_connect($db_server, $db_user, $db_password) or die('<div class="failure">ERROR: Database connection failed</div>');
-  if(mysql_select_db($db_database, $db))
+  $db = new mysqli($db_server, $db_user, $db_password) or die('<div class="failure">ERROR: Database connection failed</div>');
+  if($db->select_db($db_database))
   {
-    if(mysql_query('INSERT INTO user (username, password, avatar, firstName, lastName) VALUES("'.$_POST['username'].'", "'.md5($_POST['password']).'", NULL, "'.$_POST['fname'].'", "'.$_POST['lname'].'")'))
+    if($db->query('INSERT INTO user (username, password, avatar, firstName, lastName) VALUES("'.$db->real_escape_string($_POST['username']).'", "'.md5($_POST['password']).'", NULL, "'.$db->real_escape_string($_POST['fname']).'", "'.$db->real_escape_string($_POST['lname']).'")'))
     {
     // Success, redirect to index
+    session_auth($_POST['username'], $_POST['password'], $db);
 ?>
 <script>
 window.location = "index.php";
@@ -25,7 +26,7 @@ window.location = "index.php";
   }
   else
     echo "  <h4 style=\"text-align: center;\">Database not found: <a href=\"install.php\">Install</a></h4>\n";
-  mysql_close();
+  $db->close();
 }
 ?>
 
