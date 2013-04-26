@@ -119,8 +119,8 @@ else
   // Make sure user really wants to install
 ?>
     <br />
-    <h3 align="center">WARNING: Install script will erase ALL existing data.</h3>
-    <h1 align="center"><a href="install.php?install">INSTALL</a></h1>
+    <h3 style="text-align: center;">WARNING: Install script will erase ALL existing data.</h3>
+    <h1 style="text-align: center;"><a href="install.php?install">INSTALL</a></h1>
     <br />
     <br />
 <?php
