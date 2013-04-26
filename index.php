@@ -5,7 +5,7 @@ include 'template.php';
 template_head('Forum Index', 'Jason Gassel');
 template_forum_header();
 
-$db = mysql_connect($db_server, $db_user, $db_password) or die('<strong>ERROR:</strong> Database connection failed.');
+$db = mysql_connect($db_server, $db_user, $db_password) or die('<div class="failure">ERROR: Database connection failed</div>');
 if(mysql_select_db($db_database, $db))
 {
 ?>

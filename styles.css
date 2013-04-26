@@ -69,3 +69,15 @@ footer
 	width: 870px;
 	border-radius: 5px;
 }
+
+.success
+{
+  color: green;
+  font-weight: bold;
+}
+
+.failure
+{
+  color: red;
+  font-weight: bold;
+}

@@ -13,9 +13,9 @@ if(isset($_GET['install']))
   session_start();
   session_destroy();
   
-  $success = "<font color=\"green\">SUCCESS</font><br />\n";
-  $failure = "<font color=\"red\">FAILED</font><br />\n";
-  $dne = "<font color=\"green\">DNE</font><br />\n";
+  $success = "<div class=\"success\">SUCCESS</div><br />\n";
+  $failure = "<div class=\"failure\">FAILED</div><br />\n";
+  $dne = "<div class=\"success\">DNE</div><br />\n";
   
   // Setup database
   echo "<h3>Install Script</h3><p>\n";
