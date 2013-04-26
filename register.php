@@ -55,7 +55,7 @@ function validateForm()
 }
 </script>
 
-  <form name="registerForm" action="register.php" onsubmit="return validateForm()" method="post">
+  <form name="registerForm" action="register.php" onsubmit="return validateForm()" method="post" class="register">
     <h2>Register account</h2>
     Username: <input type="text" name="username" required autofocus /><br />
     Password: <input type="password" name="password" required /><br />

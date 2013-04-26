@@ -39,13 +39,13 @@ header ul li a:hover
   text-decoration: underline;
 }
 
-form
+form.register
 {
   text-align: right;
   width: 280px;
 }
 
-input
+form.register input
 {
   margin: 2px;
 }
