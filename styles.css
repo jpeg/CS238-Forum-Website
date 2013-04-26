@@ -39,6 +39,17 @@ header ul li a:hover
   text-decoration: underline;
 }
 
+form
+{
+  text-align: right;
+  width: 280px;
+}
+
+input
+{
+  margin: 2px;
+}
+
 footer
 {
   color: LightGrey;
