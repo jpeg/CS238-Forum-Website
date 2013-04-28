@@ -6,7 +6,7 @@ template_forum_header();
 
 $user = NULL;
 if(isset($_GET['user']))
-  $uid = $_GET['user'];
+  $uid = (int)$_GET['user'];
 else
   $uid = $_SESSION['uid'];
 
