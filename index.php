@@ -13,7 +13,7 @@ if($db->select_db($db_database))
 <?php
 }
 else
-  echo "  <h4 style=\"text-align: center;\">Database not found: <a href=\"install.php\">Install</a></h4>\n";
+  echo "    <h4 style=\"text-align: center;\">Database not found: <a href=\"install.php\">Install</a></h4>\n";
 
 $db->close();
 

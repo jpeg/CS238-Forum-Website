@@ -42,13 +42,14 @@ if(isset($_POST['submit']))
     
     if($db->query('INSERT INTO user (username, password, avatar, firstName, lastName) VALUES("'.$db->real_escape_string($_POST['username']).'", "'.md5($_POST['password']).'", NULL, "'.$db->real_escape_string($_POST['fname']).'", "'.$db->real_escape_string($_POST['lname']).'")'))
     {
-    // Success, redirect to index
-    session_auth($_POST['username'], $_POST['password'], $db);
+      // Success, redirect to index
+      session_auth($_POST['username'], $_POST['password'], $db);
 ?>
 <script>
 window.location = "index.php";
 </script>
 <?php
+      die();
     }
     else
       $invalid = true;

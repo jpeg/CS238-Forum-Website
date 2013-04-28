@@ -1,6 +1,13 @@
 <?php
 include 'session.php';
 
+class ThreadType
+{
+  const Normal = 0;
+  const Sticky = 1;
+  const Poll = 2;
+}
+
 function template_head($title, $author)
 {
 ?>

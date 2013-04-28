@@ -1,4 +1,5 @@
 <?php
+include 'config.php';
 include 'template.php';
 
 template_head('Profile: NAME', 'Jason Gassel, Josh Galan, Matthew McKeller');

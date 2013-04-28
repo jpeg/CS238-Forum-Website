@@ -17,6 +17,7 @@ if(isset($_POST['submit']))
 window.location = "index.php";
 </script>
 <?php
+    die();
   }
 }
 ?>
