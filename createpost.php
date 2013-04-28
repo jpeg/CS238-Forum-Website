@@ -64,11 +64,17 @@ window.location = "viewthread.php?thread=<?= $tid; ?>";
   }
 }
 
-echo "    <form name=\"postForm\" action=\"createpost.php?".(isset($_GET['new']) ? 'new' : '').(isset($_GET['thread']) ? '&thread='.$_GET['thread'] : '')."\" method=\"post\">\n";
+?>
+    <form name=\"postForm\" action=\"createpost.php?".(isset($_GET['new']) ? 'new' : '').(isset($_GET['thread']) ? '&thread='.$_GET['thread'] : '')."\" method=\"post\">
+<?php
 if(isset($_GET['new']))
   echo "      <label for=\"title\">Thread Title:</label><input type=\"text\" name=\"title\" required autofocus /><br />\n";
 ?>
       <textarea name="post" rows=10 cols=50 maxlength=10000 required <?= isset($_GET['new']) ? '' : 'autofocus' ?>></textarea><br />
+<?php
+if(isset($_GET['new']))
+{
+?>
       <label for="question">Poll Question:</label><input type="text" name="question" /><br />
       <label for="option1">Option 1:</label><input type="text" name="option1" /><br />
       <label for="option2">Option 2:</label><input type="text" name="option2" /><br />
@@ -77,6 +83,9 @@ if(isset($_GET['new']))
       <label for="option5">Option 5:</label><input type="text" name="option5" /><br />
       <label for="option6">Option 6:</label><input type="text" name="option6" /><br />
       <label for="tag">Sticky Tag:</label><input type="text" name="tag" /><br />
+<?php
+}
+?>
       <input type="submit" value="Submit" name="submit" />
     </form>
 <?php
