@@ -12,6 +12,34 @@ if(isset($_POST['username']))
   $db = new mysqli($db_server, $db_user, $db_password) or die('<div class="failure">ERROR: Database connection failed</div>');
   if($db->select_db($db_database))
   {
+    // Save avatar
+    /* Issues with upload, just do image URL for now
+    $avatar = NULL;
+    $fileExtension = NULL;
+    $goodUpload = false;
+    if(isset($_FILES['avatar']))
+    {
+      $fileExtension = end(explode('.', $_FILES['avatar']['name']));
+      if($fileExtension == 'png' || $fileExtension = 'jpg' || $fileExtension == 'jpeg' || $fileExtension == 'gif')
+      {
+        $type = $_FILES['avatar']['type'];
+        if($type == 'image/png' || $type == 'image/x-png' || $type == 'image/jpg' || $type == 'image/jpeg' || $type == 'image/gif')
+        {
+          if($_FILES['avatar']['size'] < $avatar_maxSize)
+          {
+            if ($_FILES["file"]["error"] > 0)
+            {
+              echo "Error: " . $_FILES["file"]["error"] . "<br />";
+            }
+            else
+            {
+              $goodUpload = true;
+            }
+          }
+        }
+      }
+    }*/
+    
     if($db->query('INSERT INTO user (username, password, avatar, firstName, lastName) VALUES("'.$db->real_escape_string($_POST['username']).'", "'.md5($_POST['password']).'", NULL, "'.$db->real_escape_string($_POST['fname']).'", "'.$db->real_escape_string($_POST['lname']).'")'))
     {
     // Success, redirect to index
@@ -24,6 +52,16 @@ window.location = "index.php";
     }
     else
       $invalid = true;
+    
+    if(/*$goodUpload*/ isset($_POST['avatar']) && !$invalid)
+    {
+      //move_uploaded_file($_FILES['avatar']['tmp_name'], 'images/avatars/'.$_SESSION['uid'].'.'.$fileExtension);
+      $fileExtension = end(explode('.', $_POST['avatar']));
+      if($fileExtension == 'png' || $fileExtension = 'jpg' || $fileExtension == 'jpeg' || $fileExtension == 'gif')
+      {
+        $db->query('UPDATE user SET avatar="'.$_POST['avatar'].'" WHERE uid='.$_SESSION['uid']);
+      }
+    }
   }
   else
     echo "  <h4 style=\"text-align: center;\">Database not found: <a href=\"install.php\">Install</a></h4>\n";
@@ -56,17 +94,19 @@ function validateForm()
 }
 </script>
 
-  <form name="registerForm" action="register.php" onsubmit="return validateForm()" method="post" class="register">
+  <form name="registerForm" action="register.php" onsubmit="return validateForm()" method="post" class="register"><!--enctype="multipart/form-data"-->
     <h2>Register account</h2>
 <?php
 if($invalid)
   echo "    <h4 class=\"failure\">Username already taken</h4>\n";
 ?>
-    Username: <input type="text" name="username" required autofocus /><br />
-    Password: <input type="password" name="password" required /><br />
-    Confirm Password: <input type="password" name="password2" required /><br />
-    First name: <input type="text" name="fname" /><br />
-    Last name: <input type="text" name="lname" /><br />
+    <label for="username">Username:</label><input type="text" name="username" required autofocus /><br />
+    <label for="password">Password:</label><input type="password" name="password" required /><br />
+    <label for="password2">Confirm Password:</label><input type="password" name="password2" required /><br />
+    <label for="fname">First name:</label><input type="text" name="fname" /><br />
+    <label for="lname">Last name:</label><input type="text" name="lname" /><br />
+    <label for="avatar">Avatar URL:</label><input type="text" name="avatar" /><!--"file"--><br />
+    <font style="font-style: italic;">Suggested avatar size 90x90.</font><br />
     <input type="submit" value="Submit" />
   </form>
 <?php

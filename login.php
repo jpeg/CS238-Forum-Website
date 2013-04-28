@@ -26,8 +26,8 @@ window.location = "index.php";
 if($invalid)
   echo "    <h4 class=\"failure\">Incorrect Username or password</h4>\n";
 ?>
-    Username: <input type="text" name="username" required autofocus /><br />
-    Password: <input type="password" name="password" required /><br />
+    <label for="username">Username:</label><input type="text" name="username" required autofocus /><br />
+    <label for="password">Password:</label><input type="password" name="password" required /><br />
     <input type="submit" value="Submit" />
   </form>
 <?php
