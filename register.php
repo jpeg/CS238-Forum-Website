@@ -7,7 +7,7 @@ template_forum_header();
 
 // Received form data
 $invalid = false;
-if(isset($_POST['username']))
+if(isset($_POST['submit']))
 {
   $db = new mysqli($db_server, $db_user, $db_password) or die('<div class="failure">ERROR: Database connection failed</div>');
   if($db->select_db($db_database))
@@ -59,7 +59,8 @@ window.location = "index.php";
       $fileExtension = end(explode('.', $_POST['avatar']));
       if($fileExtension == 'png' || $fileExtension = 'jpg' || $fileExtension == 'jpeg' || $fileExtension == 'gif')
       {
-        $db->query('UPDATE user SET avatar="'.$_POST['avatar'].'" WHERE uid='.$_SESSION['uid']);
+        if(!$db->query('UPDATE user SET avatar="'.$_POST['avatar'].'" WHERE uid='.$_SESSION['uid']))
+          echo"    <h4 class=\"failure\">ERROR: Failed to set avater</h4>\n";
       }
     }
   }
@@ -85,7 +86,7 @@ function validateForm()
     alert("Password cannot be blank");
     return false;
   }
-  y = document.forms["registerForm"]["password2"].value;
+  var y = document.forms["registerForm"]["password2"].value;
   if (x != y)
   {
     alert("Passwords do not match");
@@ -94,21 +95,21 @@ function validateForm()
 }
 </script>
 
-  <form name="registerForm" action="register.php" onsubmit="return validateForm()" method="post" class="register"><!--enctype="multipart/form-data"-->
-    <h2>Register account</h2>
+    <form name="registerForm" action="register.php" onsubmit="return validateForm()" method="post" class="register"><!--enctype="multipart/form-data"-->
+      <h2>Register account</h2>
 <?php
 if($invalid)
-  echo "    <h4 class=\"failure\">Username already taken</h4>\n";
+  echo "      <h4 class=\"failure\">Username already taken</h4>\n";
 ?>
-    <label for="username">Username:</label><input type="text" name="username" required autofocus /><br />
-    <label for="password">Password:</label><input type="password" name="password" required /><br />
-    <label for="password2">Confirm Password:</label><input type="password" name="password2" required /><br />
-    <label for="fname">First name:</label><input type="text" name="fname" /><br />
-    <label for="lname">Last name:</label><input type="text" name="lname" /><br />
-    <label for="avatar">Avatar URL:</label><input type="text" name="avatar" /><!--"file"--><br />
-    <font style="font-style: italic;">Suggested avatar size 90x90.</font><br />
-    <input type="submit" value="Submit" />
-  </form>
+      <label for="username">Username:</label><input type="text" name="username" required autofocus /><br />
+      <label for="password">Password:</label><input type="password" name="password" required /><br />
+      <label for="password2">Confirm Password:</label><input type="password" name="password2" required /><br />
+      <label for="fname">First name:</label><input type="text" name="fname" /><br />
+      <label for="lname">Last name:</label><input type="text" name="lname" /><br />
+      <label for="avatar">Avatar URL:</label><input type="text" name="avatar" /><!--"file"--><br />
+      <font style="font-style: italic;">Suggested avatar size 90x90.</font><br />
+      <input type="submit" value="Submit" name="submit" />
+    </form>
 <?php
 template_footer();
 ?>
