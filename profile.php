@@ -52,7 +52,7 @@ if($user)
       }
     }
     
-    if(!$db->query('UPDATE user SET password="'.$user['password'].'", firstName="'.$user['firstName'].'", lastName="'.$user['lastName'].'", avatar="'.$user['avatar'].'" WHERE uid='.$uid))
+    if(!$db->query('UPDATE user SET password="'.$user['password'].'", firstName="'.$db->real_escape_string($user['firstName']).'", lastName="'.$db->real_escape_string($user['lastName']).'", avatar="'.$db->real_escape_string($user['avatar']).'" WHERE uid='.$uid))
       echo"    <h4 class=\"failure\">ERROR: Failed to update info</h4>\n";
   }
   
