@@ -13,28 +13,32 @@ if(isset($_POST['submit']))
     if(isset($_GET['new']))
     {
       $type = ThreadType::Normal;
-      $question = NULL;
+      $question = 'NULL';
       if(isset($_POST['question']) && $_POST['question'] != NULL && $_POST['question'] != '')
       {
-        $type += ThreadTypes::Poll;
+        $type += ThreadType::Poll;
         $question = $db->real_escape_string($_POST['question']);
+        $question = '"'.$question.'"'; //string for mysql insert
       }
-      $tag = NULL;
+      $tag = 'NULL';
       if(isset($_POST['tag']) && $_POST['tag'] != NULL && $_POST['tag'] != '')
       {
-        $type += ThreadTypes::Sticky;
+        $type += ThreadType::Sticky;
         $tag = $db->real_escape_string($_POST['tag']);
+        $tag = '"'.$tag.'"'; //string for mysql insert
       }
-      $db->query('INSERT INTO thread (uid, title, type, question, tag) VALUES('.$_SESSION['uid'].', '.$db->real_escape_string($_POST['title']).", $type, $question, $tag)");
+      $db->query('INSERT INTO thread (uid, title, type, question, tag) VALUES('.$_SESSION['uid'].', "'.$db->real_escape_string($_POST['title'])."\", $type, $question, $tag)");
       $tid = mysqli_insert_id($db);
       
       if(isset($_POST['question']) && $_POST['question'] != NULL && $_POST['question'] != '')
       {
+        $j = 1;
         for($i=1; $i<=6; $i++)
         {
           if(isset($_POST['option'.$i]) && $_POST['option'.$i] != NULL && $_POST['option'.$i] != '')
           {
-            $db->query("INSERT INTO poll_options (tid, oid, option_text) VALUES($tid, $i, ".$db->real_escape_string($_POST['option'.$i]).')');
+            $db->query("INSERT INTO poll_option (tid, oid, option_text) VALUES($tid, $j, \"".$db->real_escape_string($_POST['option'.$i]).'")');
+            $j++;
           }
         }
       }
@@ -44,7 +48,7 @@ if(isset($_POST['submit']))
     else
       die("<h4 style=\"text-align: center;\">ERROR: You're not supposed to be here...\n");
     
-    $db->query("INSERT INTO post (tid, uid, date, time, text) VALUES($tid, ".$_SESSION['uid'].', CURDATE(), CURTIME(), '.$db->real_escape_string($_POST['post']).')');
+    $db->query("INSERT INTO post (tid, uid, date, time, text) VALUES($tid, ".$_SESSION['uid'].', CURDATE(), CURTIME(), "'.$db->real_escape_string($_POST['post']).'")');
     $db->close();
 ?>
 <script>
