@@ -12,6 +12,8 @@ if($db->select_db($db_database))
     
     if($thread)
     {
+      //TODO record vote
+      
       // Build thread title
       $title = $thread['title'];
       if($thread['type'] & ThreadType::Sticky != 0)
@@ -25,9 +27,26 @@ if($db->select_db($db_database))
       echo "    <section class=\"thread\">\n";
       echo "      <h2>$title</h2>\n";
       
-      if($thread['type'] & ThreadType::Poll != 0)
+      if($thread['type'] & ThreadType::Poll)
       {
-        //TODO display poll or results
+?>
+    <form name="postForm" action="viewthread.php" method="post">
+      <strong><?= $thread['question']; ?></strong><br />
+<?php
+        $result = $db->query('SELECT oid, option_text FROM poll_option WHERE tid='.(int)$_GET['thread'].' ORDER BY oid');
+        $first = true;
+        while($row = $result->fetch_array())
+        {
+          //TODO find # of votes for each option and total
+?>
+      <input type="radio" name="poll" id="option<?= $row['oid']; ?>" value="<?= $row['option_text']; ?>" <?= ($first ? 'checked = "checked" ' : '' ); ?>/><label for="option<?= $row['oid']; ?>"><?= $row['option_text']; ?></label><br />
+<?php
+          $first = false;
+        }
+?>
+      <input type="submit" value="Vote" name="submit" />
+    </form>
+<?php
       }
       
       //TODO display posts
