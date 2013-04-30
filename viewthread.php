@@ -12,8 +12,6 @@ if($db->select_db($db_database))
     
     if($thread)
     {
-      //TODO record vote
-      
       // Build thread title
       $title = $thread['title'];
       if($thread['type'] & ThreadType::Sticky != 0)
@@ -27,19 +25,41 @@ if($db->select_db($db_database))
       echo "    <section class=\"thread\">\n";
       echo "      <h2>$title</h2>\n";
       
+      // Record vote, vulnerable to tampering but don't care right now
+      if(isset($_POST['submit']) && $_SESSION['uid'] != 0)
+      {
+        $chosen = intval($_POST['poll']);
+        $success = $db->query('INSERT INTO poll_vote (tid, uid, oid) VALUES('.$_GET['thread'].', '.$_SESSION['uid'].', '.$chosen.')');
+        if(!$success)
+          $db->query("UPDATE poll_vote SET oid =$chosen WHERE tid=".$_GET['thread'].' AND uid='.$_SESSION['uid']);
+      }
+      
+      // Display poll
       if($thread['type'] & ThreadType::Poll)
       {
 ?>
-    <form name="postForm" action="viewthread.php" method="post">
+    <form name="postForm" action="viewthread.php?thread=<?= $_GET['thread']; ?>" method="post">
       <strong><?= $thread['question']; ?></strong><br />
 <?php
         $result = $db->query('SELECT oid, option_text FROM poll_option WHERE tid='.(int)$_GET['thread'].' ORDER BY oid');
+        $totalResult = $db->query('SELECT COUNT(uid) AS count FROM poll_vote WHERE tid='.(int)$_GET['thread']);
+        $total = $totalResult->fetch_array();
+        if($total)
+          $totalCount = $total['count'];
+        else
+          $totalCount = 0;
         $first = true;
         while($row = $result->fetch_array())
         {
-          //TODO find # of votes for each option and total
+          // Doing one poll option at a time rather than using GROUP BY to simplify the case where there's no votes
+          $votesResult = $db->query('SELECT COUNT(uid) AS count FROM poll_vote WHERE tid='.(int)$_GET['thread'].' AND oid='.$row['oid']);
+          $votes = $votesResult->fetch_array();
+          if($votes)
+            $voteCount = $votes['count'];
+          else
+            $voteCount = 0;
 ?>
-      <input type="radio" name="poll" id="option<?= $row['oid']; ?>" value="<?= $row['option_text']; ?>" <?= ($first ? 'checked = "checked" ' : '' ); ?>/><label for="option<?= $row['oid']; ?>"><?= $row['option_text']; ?></label><br />
+      <input type="radio" name="poll" value="<?= $row['oid']; ?>" <?= ($first ? 'checked = "checked" ' : '' ); ?>/><label for="option<?= $row['oid']; ?>">[<?= $voteCount; ?>/<?= $totalCount; ?>] <?= $row['option_text']; ?></label><br />
 <?php
           $first = false;
         }
