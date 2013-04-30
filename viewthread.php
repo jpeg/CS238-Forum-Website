@@ -12,12 +12,7 @@ if($db->select_db($db_database))
     
     if($thread)
     {
-      // Build thread title
-      $title = $thread['title'];
-      if($thread['type'] & ThreadType::Sticky != 0)
-        $title = '['.$thread['tag'].']'.$title;
-      if($thread['type'] & ThreadType::Poll != 0)
-        $title = 'Poll: '.$title;
+      $title = template_thread_title($thread['title'], $thread['type'], $thread['tag']);
       
       template_head($title, 'Jason Gassel, Josh Galan, Matthew McKeller');
       template_forum_header();

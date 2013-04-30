@@ -61,4 +61,14 @@ function template_footer()
 </html>
 <?php
 }
+
+function template_thread_title($title, $type=0, $tag=NULL)
+{
+  // Build thread title
+  if($type & ThreadType::Sticky && $tag != NULL && $tag != '')
+    $title = '['.$tag.']'.$title;
+  if($type & ThreadType::Poll)
+    $title = 'Poll: '.$title;
+  return $title;
+}
 ?>
