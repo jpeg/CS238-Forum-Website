@@ -72,7 +72,7 @@ function template_thread_title($title, $type=0, $tag=NULL)
   return $title;
 }
 
-function template_post($tid, $uid, $date, $time, $text, $db)
+function template_post($tid, $pid, $uid, $date, $time, $text, $db)
 {
   $text = str_replace("\n", '<br />', $text);
   
@@ -95,7 +95,7 @@ function template_post($tid, $uid, $date, $time, $text, $db)
         <div class="controls">
 <?php
     if($uid == $_SESSION['uid'])
-      echo '<a href="idk.php?thread='.$tid."\">Delete</a>\n";
+      echo '<a href="viewthread.php?thread='.$tid."&delete=".$pid."\">Delete</a>\n";
 ?>
           <a href="createpost.php?thread=<?= $tid; ?>">Reply</a>
         </div>

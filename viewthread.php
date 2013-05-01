@@ -20,6 +20,19 @@ if($db->select_db($db_database))
       echo "    <section class=\"thread\">\n";
       echo "      <h2>$title</h2>\n";
       
+      // Delete post
+      if(isset($_GET['delete']))
+      {
+        // Check permission to delete post
+        $result = $db->query('SELECT uid FROM post WHERE pid='.(int)$_GET['delete']);
+        $row = $result->fetch_array();
+        if($row)
+        {
+          if($row['uid'] == $_SESSION['uid'])
+            $db->query('DELETE FROM post WHERE pid='.(int)$_GET['delete']);
+        }
+      }
+      
       // Record vote, vulnerable to tampering but don't care right now
       if(isset($_POST['submit']) && $_SESSION['uid'] != 0)
       {
@@ -64,11 +77,11 @@ if($db->select_db($db_database))
 <?php
       }
       
-      $posts = $db->query('SELECT uid, date, time, text FROM post WHERE tid='.(int)$_GET['thread'].' ORDER BY pid');
+      $posts = $db->query('SELECT pid, uid, date, time, text FROM post WHERE tid='.(int)$_GET['thread'].' ORDER BY pid');
       
       while($post = $posts->fetch_array())
       {
-        template_post((int)$_GET['thread'], $post['uid'], $post['date'], $post['time'], $post['text'], $db);
+        template_post((int)$_GET['thread'], $post['pid'], $post['uid'], $post['date'], $post['time'], $post['text'], $db);
       }
       
       echo "    </section>\n";
