@@ -81,7 +81,7 @@ if($db->select_db($db_database))
       
       while($post = $posts->fetch_array())
       {
-        template_post((int)$_GET['thread'], $post['pid'], $post['uid'], $post['date'], $post['time'], $post['text'], $db);
+        template_post($db, (int)$_GET['thread'], $post['pid'], $post['uid'], $post['date'], $post['time'], $post['text']);
       }
       
       echo "    </section>\n";

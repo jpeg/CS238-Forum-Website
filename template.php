@@ -73,21 +73,56 @@ function template_thread_title($title, $type=0, $tag=NULL)
   return $title;
 }
 
-function template_post($tid, $pid, $uid, $date, $time, $text, $db)
+function template_thread_info($db, $tid, $uid, $title, $type, $question=NULL, $tag=NULL)
+{
+  $displayTitle = template_thread_title($title, $type, $tag);
+  
+  $userResult = $db->query('SELECT username, avatar FROM user WHERE uid='.$uid);
+  $user = $userResult->fetch_array();
+  $latestPostResult = $db->query('SELECT uid, date, time FROM post WHERE tid='.$tid.' ORDER BY date DESC, time DESC LIMIT 0, 1');
+  $latestPost = $latestPostResult->fetch_array();
+  $userResult = $db->query('SELECT username, avatar FROM user WHERE uid='.$uid);
+  $latestUser = $userResult->fetch_array();
+  
+  if($user && $latestPost)
+  {
+?>
+      <article class="threadInfo">
+        <a href="viewthread.php?thread=<?= $tid; ?>" class="infoTitle"><?= $title; ?></a>
+        <br />
+        Created By:
+        <a href="profile.php?user=<?= $uid; ?>" class="infoUsername">
+          <img src="<?= $user['avatar']; ?>" alt="<?= $user['username'] ?>'s avatar" class="miniAvatar" />
+          <?= $user['username'] ?>
+        </a>
+        <div class="infoLatestPost">
+          Last Reply:
+          <a href="profile.php?user=<?= $latestPost['uid']; ?>" class="infoUsername">
+            <img src="<?= $latestUser['avatar']; ?>" alt="<?= $latestUser['username'] ?>'s avatar" class="miniAvatar" />
+            <?= $latestUser['username'] ?>
+          </a>
+          on <?= $latestPost['date']; ?> <?= $latestPost['time'] ?>
+        </div>
+      </article>
+<?php
+  }
+}
+
+function template_post($db, $tid, $pid, $uid, $date, $time, $text)
 {
   $text = str_replace("\n", '<br />', $text);
   
-  $result = $db->query('SELECT username, avatar FROM user WHERE uid='.$uid);
-  $user = $result->fetch_array();
+  $userResult = $db->query('SELECT username, avatar FROM user WHERE uid='.$uid);
+  $user = $userResult->fetch_array();
   
   if($user)
   {
 ?>
       <article class="post">
         <div class="userInfo">
-          <a href="profile.php?<?= $uid ?>"><img src="<?= $user['avatar']; ?>" alt="<?= $user['username'] ?>'s avatar" class="avatar" /></a>
+          <a href="profile.php?user=<?= $uid ?>"><img src="<?= $user['avatar']; ?>" alt="<?= $user['username'] ?>'s avatar" class="avatar" /></a>
           <br />
-          <a href="profile.php?<?= $uid ?>" class="username"><?= $user['username']; ?></a>
+          <a href="profile.php?user=<?= $uid ?>" class="username"><?= $user['username']; ?></a>
         </div>
         <div class="text">
           <?= $text; ?>

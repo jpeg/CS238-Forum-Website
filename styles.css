@@ -51,6 +51,13 @@ img.avatar
   width: 90px;
 }
 
+img.miniAvatar
+{
+  vertical-align: middle;
+  height: 20px;
+  width: 20px;
+}
+
 form.register
 {
   text-align: right;
@@ -109,15 +116,56 @@ footer
 {
 }
 
+.threadInfo
+{
+  background: LightGrey;
+  margin: 10px;
+  margin-top: 20px;
+	padding: 20px;
+  padding-top: 15px;
+	width: 810px;
+	border-radius: 5px;
+  overflow: hidden;
+}
+
+.threadInfo a.infoTitle
+{
+  color: Black;
+  text-decoration: none;
+  font-size: 18pt;
+  font-weight: bold;
+}
+
+.threadInfo a.infoTitle:hover
+{
+  text-decoration: underline;
+}
+
+.threadInfo a.infoUsername
+{
+  color: Black;
+  text-decoration: none;
+  font-size: 12pt;
+  font-weight: bold;
+}
+
+.threadInfo a.infoUsername:hover
+{
+  text-decoration: underline;
+}
+
+.threadInfo div.infoLatestPost
+{
+  float: right;
+}
+
 .post
 {
   background: LightGrey;
-  margin-top: 0px;
-	margin-bottom: 0px;
-	padding: 20px;
-  padding-bottom: 10px;
   margin: 10px;
   margin-top: 20px;
+	padding: 20px;
+  padding-bottom: 10px;
   min-height: 120px;
 	width: 810px;
 	border-radius: 5px;
@@ -136,6 +184,11 @@ footer
   font-size: 20px;
   font-weight: bold;
   margin-left: 2px;
+}
+
+.post a.username:hover
+{
+  text-decoration: underline;
 }
 
 .post div.text
