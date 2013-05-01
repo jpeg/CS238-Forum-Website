@@ -14,8 +14,15 @@ if($db->select_db($db_database))
 <?php
   // Display sticky posts at top
   $result = $db->query('SELECT thread.tid AS tid, thread.uid AS uid, title, type, question, tag FROM thread, post WHERE thread.tid=post.tid AND (type=1 OR type=3) GROUP BY thread.tid ORDER BY MAX(pid) DESC');
-  while($row = $result->fetch_array())
-    template_thread_info($db, $row['tid'], $row['uid'], $row['title'], $row['type'], $row['question'], $row['tag']);
+  if($result->num_rows > 0)
+  {
+    while($row = $result->fetch_array())
+      template_thread_info($db, $row['tid'], $row['uid'], $row['title'], $row['type'], $row['question'], $row['tag']);
+  }
+  else
+  {
+    echo "      <h4>None</h4>\n";
+  }
   
 ?>
     <br />
@@ -23,9 +30,16 @@ if($db->select_db($db_database))
 <?php
   // Display all posts
   $result = $db->query('SELECT thread.tid AS tid, thread.uid AS uid, title, type, question, tag FROM thread, post WHERE thread.tid=post.tid AND (type=0 OR type=2) GROUP BY thread.tid ORDER BY MAX(pid) DESC');
-  while($row = $result->fetch_array())
-    template_thread_info($db, $row['tid'], $row['uid'], $row['title'], $row['type'], $row['question']);
-
+  if($result->num_rows > 0)
+  {
+    while($row = $result->fetch_array())
+      template_thread_info($db, $row['tid'], $row['uid'], $row['title'], $row['type'], $row['question']);
+  }
+  else
+  {
+    echo "      <h4>None</h4>\n";
+  }
+  
 }
 else
   echo "    <h4 style=\"text-align: center;\">Database not found: <a href=\"install.php\">Install</a></h4>\n";
