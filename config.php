@@ -6,4 +6,5 @@ $db_password = '';
 $db_database = 'forum238';
 
 $avatar_maxSize = 20000;
+$avatar_default = 'images/DefaultAvatar.png';
 ?>

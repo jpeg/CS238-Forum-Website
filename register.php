@@ -40,7 +40,7 @@ if(isset($_POST['submit']))
       }
     }*/
     
-    if($db->query('INSERT INTO user (username, password, avatar, firstName, lastName) VALUES("'.htmlspecialchars($db->real_escape_string($_POST['username']), ENT_HTML5).'", "'.md5($_POST['password']).'", NULL, "'.htmlspecialchars($db->real_escape_string($_POST['fname']), ENT_HTML5).'", "'.htmlspecialchars($db->real_escape_string($_POST['lname']), ENT_HTML5).'")'))
+    if($db->query('INSERT INTO user (username, password, firstName, lastName) VALUES("'.htmlspecialchars($db->real_escape_string($_POST['username']), ENT_HTML5).'", "'.md5($_POST['password']).'", "'.htmlspecialchars($db->real_escape_string($_POST['fname']), ENT_HTML5).'", "'.htmlspecialchars($db->real_escape_string($_POST['lname']), ENT_HTML5).'")'))
     {
       // Success, redirect to index
       session_auth($_POST['username'], $_POST['password'], $db);

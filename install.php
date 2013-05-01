@@ -50,7 +50,7 @@ if(isset($_GET['install']))
       
       // Create database tables
       echo 'Creating users table: ';
-      if($db->query('CREATE TABLE user(uid INT UNIQUE NOT NULL AUTO_INCREMENT PRIMARY KEY, username VARCHAR(20) UNIQUE NOT NULL, password CHAR(32) NOT NULL, avatar VARCHAR(200), firstName VARCHAR(20), lastName VARCHAR(20))'))
+      if($db->query("CREATE TABLE user(uid INT UNIQUE NOT NULL AUTO_INCREMENT PRIMARY KEY, username VARCHAR(20) UNIQUE NOT NULL, password CHAR(32) NOT NULL, avatar VARCHAR(200) DEFAULT '$avatar_default', firstName VARCHAR(20), lastName VARCHAR(20))"))
         echo $success;
       else
         echo $failure;
