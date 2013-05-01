@@ -252,6 +252,23 @@ footer
   text-decoration: underline;
 }
 
+.profile
+{
+}
+
+.profile div.profileUsername
+{
+  font-size: 18pt;
+  font-weight: bold;
+  padding-bottom: 5px;
+}
+
+.profile div.profilePostCount
+{
+  font-size: 14pt;
+  padding-top: 5px;
+}
+
 .success
 {
   color: green;

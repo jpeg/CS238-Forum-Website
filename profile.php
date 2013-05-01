@@ -16,6 +16,8 @@ if($db->select_db($db_database))
 {
   $result = $db->query('SELECT username, password, avatar, firstName, lastName FROM user WHERE uid='.$uid);
   $user = $result->fetch_array();
+  $result = $db->query('SELECT COUNT(pid) AS total FROM post WHERE uid='.$uid);
+  $numPosts = $result->fetch_array();
 }
 
 if($user)
@@ -94,8 +96,11 @@ function validateForm()
   {
     // Show profile info
 ?>
-    <h2><?= $user['firstName']; ?> <?= $user['lastName']; ?> (<?= $user['username']; ?>)</h2>
-    <img src="<?= $user['avatar']; ?>" alt="<?= $user['username'] ?>'s avatar" class="avatar" />
+    <section class="profile">
+      <div class="profileUsername"><?= $user['firstName']; ?> <?= $user['lastName']; ?> (<?= $user['username']; ?>)</div>
+      <img src="<?= $user['avatar']; ?>" alt="<?= $user['username'] ?>'s avatar" class="avatar" />
+      <div class="profilePostCount">Total Posts: <?= $numPosts['total']; ?></div>
+    </section>
 <?php
     
     if($uid == $_SESSION['uid'])
