@@ -17,17 +17,17 @@ if(isset($_POST['submit']))
       if(isset($_POST['question']) && $_POST['question'] != NULL && $_POST['question'] != '')
       {
         $type += ThreadType::Poll;
-        $question = $db->real_escape_string($_POST['question']);
+        $question = htmlspecialchars($db->real_escape_string($_POST['question']), ENT_HTML5);
         $question = '"'.$question.'"'; //string for mysql insert
       }
       $tag = 'NULL';
       if(isset($_POST['tag']) && $_POST['tag'] != NULL && $_POST['tag'] != '')
       {
         $type += ThreadType::Sticky;
-        $tag = $db->real_escape_string($_POST['tag']);
+        $tag = htmlspecialchars($db->real_escape_string($_POST['tag']), ENT_HTML5);
         $tag = '"'.$tag.'"'; //string for mysql insert
       }
-      $db->query('INSERT INTO thread (uid, title, type, question, tag) VALUES('.$_SESSION['uid'].', "'.$db->real_escape_string($_POST['title'])."\", $type, $question, $tag)");
+      $db->query('INSERT INTO thread (uid, title, type, question, tag) VALUES('.$_SESSION['uid'].', "'.htmlspecialchars($db->real_escape_string($_POST['title']), ENT_HTML5)."\", $type, $question, $tag)");
       $tid = mysqli_insert_id($db);
       
       if(isset($_POST['question']) && $_POST['question'] != NULL && $_POST['question'] != '')
@@ -37,7 +37,7 @@ if(isset($_POST['submit']))
         {
           if(isset($_POST['option'.$i]) && $_POST['option'.$i] != NULL && $_POST['option'.$i] != '')
           {
-            $db->query("INSERT INTO poll_option (tid, oid, option_text) VALUES($tid, $j, \"".$db->real_escape_string($_POST['option'.$i]).'")');
+            $db->query("INSERT INTO poll_option (tid, oid, option_text) VALUES($tid, $j, \"".htmlspecialchars($db->real_escape_string($_POST['option'.$i]), ENT_HTML5).'")');
             $j++;
           }
         }
@@ -48,7 +48,7 @@ if(isset($_POST['submit']))
     else
       die("<h4 style=\"text-align: center;\">ERROR: You're not supposed to be here...\n");
     
-    $db->query("INSERT INTO post (tid, uid, date, time, text) VALUES($tid, ".$_SESSION['uid'].', CURDATE(), CURTIME(), "'.$db->real_escape_string($_POST['post']).'")');
+    $db->query("INSERT INTO post (tid, uid, date, time, text) VALUES($tid, ".$_SESSION['uid'].', CURDATE(), CURTIME(), "'.htmlspecialchars($db->real_escape_string($_POST['post']), ENT_HTML5).'")');
     $db->close();
 ?>
 <script>
@@ -64,9 +64,7 @@ window.location = "viewthread.php?thread=<?= $tid; ?>";
   }
 }
 
-?>
-    <form name=\"postForm\" action=\"createpost.php?".(isset($_GET['new']) ? 'new' : '').(isset($_GET['thread']) ? '&thread='.$_GET['thread'] : '')."\" method=\"post\">
-<?php
+echo "    <form name=\"postForm\" action=\"createpost.php?".(isset($_GET['new']) ? 'new' : '').(isset($_GET['thread']) ? '&thread='.$_GET['thread'] : '')."\" method=\"post\">";
 if(isset($_GET['new']))
   echo "      <label for=\"title\">Thread Title:</label><input type=\"text\" name=\"title\" required autofocus /><br />\n";
 ?>

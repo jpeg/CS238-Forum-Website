@@ -33,8 +33,8 @@ if($db->select_db($db_database))
       if($thread['type'] & ThreadType::Poll)
       {
 ?>
-    <form name="postForm" action="viewthread.php?thread=<?= $_GET['thread']; ?>" method="post">
-      <strong><?= $thread['question']; ?></strong><br />
+      <form name="postForm" action="viewthread.php?thread=<?= $_GET['thread']; ?>" method="post">
+        <strong><?= $thread['question']; ?></strong><br />
 <?php
         $result = $db->query('SELECT oid, option_text FROM poll_option WHERE tid='.(int)$_GET['thread'].' ORDER BY oid');
         $totalResult = $db->query('SELECT COUNT(uid) AS count FROM poll_vote WHERE tid='.(int)$_GET['thread']);
@@ -54,17 +54,22 @@ if($db->select_db($db_database))
           else
             $voteCount = 0;
 ?>
-      <input type="radio" name="poll" value="<?= $row['oid']; ?>" <?= ($first ? 'checked = "checked" ' : '' ); ?>/><label for="option<?= $row['oid']; ?>">[<?= $voteCount; ?>/<?= $totalCount; ?>] <?= $row['option_text']; ?></label><br />
+        <input type="radio" name="poll" value="<?= $row['oid']; ?>" <?= ($first ? 'checked = "checked" ' : '' ); ?>/><label for="option<?= $row['oid']; ?>">[<?= $voteCount; ?>/<?= $totalCount; ?>] <?= $row['option_text']; ?></label><br />
 <?php
           $first = false;
         }
 ?>
-      <input type="submit" value="Vote" name="submit" />
-    </form>
+        <input type="submit" value="Vote" name="submit" />
+      </form>
 <?php
       }
       
-      //TODO display posts
+      $posts = $db->query('SELECT uid, date, time, text FROM post WHERE tid='.(int)$_GET['thread'].' ORDER BY pid');
+      
+      while($post = $posts->fetch_array())
+      {
+        template_post((int)$_GET['thread'], $post['uid'], $post['date'], $post['time'], $post['text'], $db);
+      }
       
       echo "    </section>\n";
     }

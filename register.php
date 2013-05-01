@@ -40,7 +40,7 @@ if(isset($_POST['submit']))
       }
     }*/
     
-    if($db->query('INSERT INTO user (username, password, avatar, firstName, lastName) VALUES("'.$db->real_escape_string($_POST['username']).'", "'.md5($_POST['password']).'", NULL, "'.$db->real_escape_string($_POST['fname']).'", "'.$db->real_escape_string($_POST['lname']).'")'))
+    if($db->query('INSERT INTO user (username, password, avatar, firstName, lastName) VALUES("'.htmlspecialchars($db->real_escape_string($_POST['username']), ENT_HTML5).'", "'.md5($_POST['password']).'", NULL, "'.htmlspecialchars($db->real_escape_string($_POST['fname']), ENT_HTML5).'", "'.htmlspecialchars($db->real_escape_string($_POST['lname']), ENT_HTML5).'")'))
     {
       // Success, redirect to index
       session_auth($_POST['username'], $_POST['password'], $db);
@@ -60,7 +60,7 @@ window.location = "index.php";
       $fileExtension = end(explode('.', $_POST['avatar']));
       if($fileExtension == 'png' || $fileExtension = 'jpg' || $fileExtension == 'jpeg' || $fileExtension == 'gif')
       {
-        if(!$db->query('UPDATE user SET avatar="'.$db->real_escape_string($_POST['avatar']).'" WHERE uid='.(int)$_SESSION['uid']))
+        if(!$db->query('UPDATE user SET avatar="'.htmlspecialchars($db->real_escape_string($_POST['avatar']), ENT_HTML5).'" WHERE uid='.(int)$_SESSION['uid']))
           echo"    <h4 class=\"failure\">ERROR: Failed to set avater</h4>\n";
       }
     }

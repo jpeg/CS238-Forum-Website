@@ -31,7 +31,7 @@ function session_auth($username, $password, &$db = NULL)
   if($db_null)
     $db = new mysqli($db_server, $db_user, $db_password, $db_database) or die('<div class="failure">ERROR: Database connection failed</div>');
   
-  $result = $db->query('SELECT uid, username FROM user WHERE username="'.$db->real_escape_string($username).'" AND password="'.md5($password).'"');
+  $result = $db->query('SELECT uid, username FROM user WHERE username="'.htmlspecialchars($db->real_escape_string($username), ENT_HTML5).'" AND password="'.md5($password).'"');
   while($row = $result->fetch_array())
   {
     $_SESSION['uid'] = $row['uid'];

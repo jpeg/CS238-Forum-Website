@@ -71,4 +71,36 @@ function template_thread_title($title, $type=0, $tag=NULL)
     $title = 'Poll: '.$title;
   return $title;
 }
+
+function template_post($tid, $uid, $date, $time, $text, $db)
+{
+  $text = str_replace("\n", '<br />', $text);
+  
+  $result = $db->query('SELECT username, avatar FROM user WHERE uid='.$uid);
+  $user = $result->fetch_array();
+  
+  if($user)
+  {
+?>
+      <article class="post">
+        <div class="userInfo">
+          <a href="profile.php?<?= $uid ?>"><img src="<?= $user['avatar']; ?>" alt="<?= $user['username'] ?>'s avatar" class="avatar" /></a>
+          <br />
+          <a href="profile.php?<?= $uid ?>" class="username"><?= $user['username']; ?></a>
+        </div>
+        <div class="text">
+          <?= $text; ?>
+        </div>
+        <br />
+        <div class="controls">
+<?php
+    if($uid == $_SESSION['uid'])
+      echo '<a href="idk.php?thread='.$tid."\">Delete</a>\n";
+?>
+          <a href="createpost.php?thread=<?= $tid; ?>">Reply</a>
+        </div>
+      </article>
+<?php
+  }
+}
 ?>
