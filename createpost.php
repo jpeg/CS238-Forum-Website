@@ -16,9 +16,22 @@ if(isset($_POST['submit']))
       $question = 'NULL';
       if(isset($_POST['question']) && $_POST['question'] != NULL && $_POST['question'] != '')
       {
-        $type += ThreadType::Poll;
-        $question = htmlspecialchars($db->real_escape_string($_POST['question']), ENT_HTML5);
-        $question = '"'.$question.'"'; //string for mysql insert
+        // Check at least one option for poll
+        $hasOption = false;
+        for($i=1; $i<=6; $i++)
+        {
+          if(isset($_POST['option'.$i]) && $_POST['option'.$i] != NULL && $_POST['option'.$i] != '')
+          {
+            $hasOption = true;
+            break;
+          }
+        }
+        if($hasOption)
+        {
+          $type += ThreadType::Poll;
+          $question = htmlspecialchars($db->real_escape_string($_POST['question']), ENT_HTML5);
+          $question = '"'.$question.'"'; //string for mysql insert
+        }
       }
       $tag = 'NULL';
       if(isset($_POST['tag']) && $_POST['tag'] != NULL && $_POST['tag'] != '')
