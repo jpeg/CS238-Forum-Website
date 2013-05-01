@@ -72,10 +72,21 @@ form.register input
 form.login
 {
   text-align: right;
-  width: 220px;
+  width: 225px;
 }
 
 form.login input
+{
+  margin: 2px;
+}
+
+form.search
+{
+  text-align: right;
+  width: 225px;
+}
+
+form.search input
 {
   margin: 2px;
 }
