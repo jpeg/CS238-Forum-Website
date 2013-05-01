@@ -34,6 +34,7 @@ function template_forum_header()
   <header>
     <ul>
       <li><a href="index.php" id="logo">forum238</a></li>
+      <li><a href="search.php">Search</a></li>
 <?php
   if($_SESSION['uid'] == 0)
   {
