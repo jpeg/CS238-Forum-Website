@@ -45,7 +45,8 @@ if($user)
     {
       if($_POST['avatar'] != NULL && $_POST['avatar'] != '')
       {
-        $fileExtension = end(explode('.', $_POST['avatar']));
+        $temp = explode('.', $_POST['avatar']);
+        $fileExtension = end($temp);
         if($fileExtension == 'png' || $fileExtension = 'jpg' || $fileExtension == 'jpeg' || $fileExtension == 'gif')
         {
           $user['avatar'] = $_POST['avatar'];
