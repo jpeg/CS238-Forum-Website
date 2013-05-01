@@ -46,7 +46,7 @@ if($db->select_db($db_database))
       if($thread['type'] & ThreadType::Poll)
       {
 ?>
-      <form name="postForm" action="viewthread.php?thread=<?= $_GET['thread']; ?>" method="post">
+      <form name="postForm" action="viewthread.php?thread=<?= $_GET['thread']; ?>" method="post" class="poll">
         <strong><?= $thread['question']; ?></strong><br />
 <?php
         $result = $db->query('SELECT oid, option_text FROM poll_option WHERE tid='.(int)$_GET['thread'].' ORDER BY oid');

@@ -110,6 +110,11 @@ form.search input
   margin: 2px;
 }
 
+form.poll input
+{
+  margin: 2px;
+}
+
 footer
 {
   color: LightGrey;
