@@ -125,6 +125,7 @@ function template_post($db, $tid, $pid, $uid, $date, $time, $text)
           <a href="profile.php?user=<?= $uid ?>" class="username"><?= $user['username']; ?></a>
         </div>
         <div class="text">
+          <div class="datetime"><?= $date.' '.$time; ?></div>
           <?= $text; ?>
         </div>
         <br />

@@ -56,7 +56,7 @@ if($user)
     else
       $user['avatar'] = $avatar_default;
     
-    if(!$db->query('UPDATE user SET password="'.$user['password'].'", firstName="'.htmlspecialchars($db->real_escape_string($user['firstName']), ENT_HTML5).'", lastName="'.htmlspecialchars($db->real_escape_string($user['lastName']), ENT_HTML5).'", avatar="'.htmlspecialchars($db->real_escape_string($user['avatar']), ENT_HTML5).'" WHERE uid='.$uid))
+    if(!$db->query('UPDATE user SET password="'.$user['password'].'", firstName="'.htmlspecialchars($db->real_escape_string($user['firstName']), ENT_HTML5).'", lastName="'.htmlspecialchars($db->real_escape_string($user['lastName']), ENT_HTML5).'", avatar="'.$db->real_escape_string($user['avatar']).'" WHERE uid='.$uid))
       echo"    <h4 class=\"failure\">ERROR: Failed to update info</h4>\n";
   }
   

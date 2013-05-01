@@ -60,7 +60,7 @@ window.location = "index.php";
       $fileExtension = end(explode('.', $_POST['avatar']));
       if($fileExtension == 'png' || $fileExtension = 'jpg' || $fileExtension == 'jpeg' || $fileExtension == 'gif')
       {
-        if(!$db->query('UPDATE user SET avatar="'.htmlspecialchars($db->real_escape_string($_POST['avatar']), ENT_HTML5).'" WHERE uid='.(int)$_SESSION['uid']))
+        if(!$db->query('UPDATE user SET avatar="'.$db->real_escape_string($_POST['avatar']).'" WHERE uid='.(int)$_SESSION['uid']))
           echo"    <h4 class=\"failure\">ERROR: Failed to set avater</h4>\n";
       }
     }

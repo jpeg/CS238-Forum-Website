@@ -226,6 +226,13 @@ footer
   vertical-align: top;
   margin-left: 110px;
   min-height: 80px;
+  font-size: 13pt;
+}
+
+.post div.text div.datetime
+{
+  text-align: right;
+  font-size: 12pt;
 }
 
 .post div.controls
