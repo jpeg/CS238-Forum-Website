@@ -58,6 +58,25 @@ img.miniAvatar
   width: 20px;
 }
 
+font.threadSection
+{
+  font-size: 16pt;
+  font-weight: bold;
+}
+
+a.newThread
+{
+  float: right;
+  color: Navy;
+  text-decoration: none;
+  font-size: 14pt;
+}
+
+a.newThread:hover
+{
+  text-decoration: underline;
+}
+
 form.register
 {
   text-align: right;

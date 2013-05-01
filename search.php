@@ -29,7 +29,7 @@ if($db->select_db($db_database))
       $first = false;
       $query = $query."title LIKE \"%$keyword%\" OR text like \"%$keyword%\"";
     }
-    $query = $query.') GROUP BY thread.tid ORDER BY COUNT(*) DESC, date DESC, time DESC';
+    $query = $query.') GROUP BY thread.tid ORDER BY COUNT(*) DESC, MAX(pid) DESC';
     
     $result = $db->query($query);
     if($result->num_rows > 0)

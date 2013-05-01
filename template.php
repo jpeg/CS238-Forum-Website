@@ -67,7 +67,7 @@ function template_thread_title($title, $type=0, $tag=NULL)
 {
   // Build thread title
   if($type & ThreadType::Sticky && $tag != NULL && $tag != '')
-    $title = '['.$tag.']'.$title;
+    $title = '['.$tag.'] '.$title;
   if($type & ThreadType::Poll)
     $title = 'Poll: '.$title;
   return $title;
@@ -79,7 +79,7 @@ function template_thread_info($db, $tid, $uid, $title, $type, $question=NULL, $t
   
   $userResult = $db->query('SELECT username, avatar FROM user WHERE uid='.$uid);
   $user = $userResult->fetch_array();
-  $latestPostResult = $db->query('SELECT uid, date, time FROM post WHERE tid='.$tid.' ORDER BY date DESC, time DESC LIMIT 0, 1');
+  $latestPostResult = $db->query('SELECT uid, date, time FROM post WHERE tid='.$tid.' ORDER BY pid DESC LIMIT 0, 1');
   $latestPost = $latestPostResult->fetch_array();
   $userResult = $db->query('SELECT username, avatar FROM user WHERE uid='.$latestPost['uid']);
   $latestUser = $userResult->fetch_array();
@@ -88,7 +88,7 @@ function template_thread_info($db, $tid, $uid, $title, $type, $question=NULL, $t
   {
 ?>
       <article class="threadInfo">
-        <a href="viewthread.php?thread=<?= $tid; ?>" class="infoTitle"><?= $title; ?></a>
+        <a href="viewthread.php?thread=<?= $tid; ?>" class="infoTitle"><?= $displayTitle; ?></a>
         <br />
         Created By:
         <a href="profile.php?user=<?= $uid; ?>" class="infoUsername">
