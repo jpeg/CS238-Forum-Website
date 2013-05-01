@@ -81,7 +81,7 @@ function template_thread_info($db, $tid, $uid, $title, $type, $question=NULL, $t
   $user = $userResult->fetch_array();
   $latestPostResult = $db->query('SELECT uid, date, time FROM post WHERE tid='.$tid.' ORDER BY date DESC, time DESC LIMIT 0, 1');
   $latestPost = $latestPostResult->fetch_array();
-  $userResult = $db->query('SELECT username, avatar FROM user WHERE uid='.$uid);
+  $userResult = $db->query('SELECT username, avatar FROM user WHERE uid='.$latestPost['uid']);
   $latestUser = $userResult->fetch_array();
   
   if($user && $latestPost)
